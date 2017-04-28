@@ -1,0 +1,21 @@
+$page = 1;
+			$count = 0;			
+			if (empty($_GET['page']))
+			$page = 1;
+			else
+			$page = $_GET['page'];			
+			$perpage = 10;			
+			$offset = $perpage * ($page - 1);
+			$limit = "limit $offset,$perpage";
+			$lc=$adcls->get_single_value("count(*) as col","tablename","");
+			$sql = $adcls->select("*", "tablename", $limit);
+      
+      // Write your Table here
+      
+      // End Your Table Date
+      
+include_once('directory/ps_pagination.php');
+				$pager = new PS_Pagination("", $lc, $perpage, 10, "");
+				$pager->setDebug(true);
+				$rs = $pager->paginate();
+				echo $pager->renderFullNav();
